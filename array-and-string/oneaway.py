@@ -1,31 +1,31 @@
 # function to check if the two string is one or two edit away to be the same
 def oneaway(str1, str2):
-    len1 = len(str1)
-    len2 = len(str2)
-    changes = 0
-    if str1 == str2:
-        return True
-    if abs(len1 - len2) > 1:
-        return False
-    else:
-        if len1 == len2:
-            for i in range(len1):
-                if str1[i] != str2[i]:
-                    changes += 1
-            if changes > 1:
+    if len(str1) == len(str2):
+        return oneReplaceAway(str1, str2)
+    elif len(str1) + 1 == len(str2):
+        return oneEditAway(str1, str2)
+    elif len(str2) + 1 == len(str1):
+        return oneEditAway(str2, str1)
+    return False
+
+
+# check if the two strings are one replace away to be the same
+def oneReplaceAway(str1, str2):
+    replacement = 0  # keep track of replacements
+    for i in range(len(str1)):
+        if str1[i] != str2[i]:
+            replacement += 1  # increment the replacement
+            if replacement > 1:
                 return False
-            else:
-                return True
-        else:
-            if len1 < len2:
-                for i in range(len1):
-                    if str1[i] not in str2:
-                        return False
-            else:
-                for i in range(len2):
-                    if str2[i] not in str2:
-                        return False
-            return True
+    return True
+
+
+# check if the two strings are one edit(insert or remove) away to be the same
+def oneEditAway(str1, str2):
+    for i in range(len(str1)):
+        if str1[i] not in str2:
+            return False
+    return True
 
 
 def testFun(str1, str2, bool_val):
